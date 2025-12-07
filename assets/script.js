@@ -20,18 +20,38 @@ const slides = [
 const arrowRight = document.querySelector(".arrow_right");
 const arrowLeft = document.querySelector(".arrow_left");
 const dotsContainer = document.querySelector(".dots");
+const bannerImg = document.querySelector(".banner-img");
+const tagline = document.querySelector("#banner p");
+
+let currentSlide = 0;
 
 slides.forEach((_, index) => {
 	const dot = document.createElement("div");
 	dot.classList.add("dot");
 	if (index === 0) dot.classList.add("dot_selected");
 	dotsContainer.appendChild(dot);
-}); 
+});
+
+const dots = document.querySelectorAll(".dot");
+
+function updateCarousel() {
+    const slide = slides[currentSlide];
+
+    bannerImg.src = "./assets/images/slideshow/" + slide.image;
+    tagline.innerHTML = slide.tagLine;
+
+    dots.forEach(dot => dot.classList.remove("dot_selected"));
+    dots[currentSlide].classList.add("dot_selected");
+};
 
 arrowRight.addEventListener("click", () => {
-    console.log('test');
+    currentSlide++;
+    if (currentSlide >= slides.length) currentSlide = 0;
+    updateCarousel();
 });
 
 arrowLeft.addEventListener("click", () => {
-    console.log('test2');
+    currentSlide--;
+    if (currentSlide < 0) currentSlide = slides.length - 1;
+    updateCarousel();
 });
